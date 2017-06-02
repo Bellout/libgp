@@ -1,5 +1,6 @@
 # Created by Manuel Blum on 2011-05-25.
 # Copyright 2013 University of Freiburg.
+# Modified by Einar J.M. Baumann (2017) <einar.baumann@gmail.com>
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
@@ -30,34 +31,14 @@ INCLUDE("Sources.cmake")
 # ----- Add library target -----
 ADD_LIBRARY(gp ${LIBGP_SRC} ${LIBGP_INTERFACES})
 
-# ----- Generate PKgconfig file ----
-get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
-if ("${LIB64}" STREQUAL "TRUE")
-    set(LIBSUFFIX 64)
-else()
-    set(LIBSUFFIX "")
-endif()
-set(INSTALL_LIB_DIR lib${LIBSUFFIX} CACHE PATH
-    "Installation directory for libraries")
-mark_as_advanced(INSTALL_LIB_DIR)
-configure_file(${CMAKE_SOURCE_DIR}/contrib/libgp.pc.in 
-	${CMAKE_BINARY_DIR}/libgp.pc @ONLY)
 
-# ----- Add example targets -----
-IF(BUILD_EXAMPLES)
-  ADD_SUBDIRECTORY(examples)
-ENDIF()
 
-# ----- Testing -----
-IF(BUILD_TESTS)
-  ADD_SUBDIRECTORY(tests)
-ENDIF()
-
-# ----- Install -----
-INSTALL(FILES ${LIBGP_INTERFACES} DESTINATION include/gp)
-INSTALL(TARGETS gp
-  RUNTIME DESTINATION bin
-  LIBRARY DESTINATION ${INSTALL_LIB_DIR}
-  ARCHIVE DESTINATION ${INSTALL_LIB_DIR}
-)
-INSTALL(FILES ${CMAKE_BINARY_DIR}/libgp.pc DESTINATION ${INSTALL_LIB_DIR}/pkgconfig)
+## ----- Add example targets -----
+#IF(BUILD_EXAMPLES)
+#  ADD_SUBDIRECTORY(examples)
+#ENDIF()
+#
+## ----- Testing -----
+#IF(BUILD_TESTS)
+#  ADD_SUBDIRECTORY(tests)
+#ENDIF()
