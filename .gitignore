@@ -3,3 +3,9 @@ build*
 archive
 *.swp
 .DS_Store
+CMakeFiles/*
+Makefile
+cmake_install.cmake
+libgp.a
+libgp.so
+
