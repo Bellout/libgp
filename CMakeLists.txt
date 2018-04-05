@@ -14,9 +14,6 @@ ENDIF(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
 set(CMAKE_CXX_FLAGS_RELEASE "-DCLSQUARE -Wall -O2 -fPIC")
 set(CMAKE_CXX_FLAGS_DEBUG "-DCLSQUARE -Wall -g -fPIC")
 
-OPTION(BUILD_TESTS "Build tests" ON)
-OPTION(BUILD_EXAMPLES "Build examples" ON)
-
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
 
 FIND_PACKAGE(Eigen3 3.0.1 REQUIRED)
@@ -31,14 +28,9 @@ INCLUDE("Sources.cmake")
 # ----- Add library target -----
 ADD_LIBRARY(gp ${LIBGP_SRC} ${LIBGP_INTERFACES})
 
+# ----- Add install targets ----
+set_target_properties(gp PROPERTIES PUBLIC_HEADER "${LIBGP_INTERFACES}")
+install(TARGETS gp DESTINATION lib
+        PUBLIC_HEADER DESTINATION include/gp)
 
 
-## ----- Add example targets -----
-#IF(BUILD_EXAMPLES)
-#  ADD_SUBDIRECTORY(examples)
-#ENDIF()
-#
-## ----- Testing -----
-#IF(BUILD_TESTS)
-#  ADD_SUBDIRECTORY(tests)
-#ENDIF()
